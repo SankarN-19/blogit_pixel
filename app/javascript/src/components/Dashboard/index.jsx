@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 
 import postsApi from "apis/posts";
-import { PageLoader, PageTitle, Container } from "components/commons";
+import { PageLoader, Container, Button } from "components/commons";
 import Card from "components/Posts/Card";
 import { isNil, isEmpty, either } from "ramda";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   const [posts, setPosts] = useState([]);
@@ -15,9 +16,9 @@ const Dashboard = () => {
         data: { posts },
       } = await postsApi.fetch();
       setPosts(posts);
-      setLoading(false);
     } catch (error) {
       logger.error(error);
+    } finally {
       setLoading(false);
     }
   };
@@ -36,7 +37,12 @@ const Dashboard = () => {
 
   return (
     <Container>
-      <PageTitle title="Blog posts" />
+      <div className="flex items-center justify-between">
+        <h2 className="text-3xl font-semibold">Blog posts</h2>
+        <Link to="/posts/create">
+          <Button buttonText="Add new blog post" />
+        </Link>
+      </div>
       {either(isNil, isEmpty)(posts) ? (
         <div className="flex h-[80vh] items-center justify-center">
           <h1 className="text-center text-xl text-gray-600">
@@ -46,7 +52,9 @@ const Dashboard = () => {
       ) : (
         <div className="mt-6 flex flex-col gap-4">
           {posts.map(post => (
-            <Card key={post.id} post={post} />
+            <Link key={post.id} to={`/posts/${post.slug}`}>
+              <Card post={post} />
+            </Link>
           ))}
         </div>
       )}

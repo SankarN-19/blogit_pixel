@@ -9,6 +9,9 @@ const Sidebar = () => (
       <div className="h-6 w-6 cursor-pointer">
         <img src="https://img.icons8.com/?size=100&id=OTxpMqWbm71F&format=png&color=000000" />
       </div>
+      <div className="h-6 w-6 cursor-pointer">
+        <img src="https://img.icons8.com/?size=100&id=11762&format=png&color=000000" />
+      </div>
     </div>
     <div className="h-8 w-8 cursor-pointer">
       <img src="https://img.icons8.com/?size=100&id=7819&format=png&color=000000" />
