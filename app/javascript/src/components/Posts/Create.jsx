@@ -12,8 +12,8 @@ const Create = () => {
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async e => {
-    e.preventDefault();
+  const handleSubmit = async event => {
+    event.preventDefault();
     setLoading(true);
     try {
       await postsApi.create({ title, description });

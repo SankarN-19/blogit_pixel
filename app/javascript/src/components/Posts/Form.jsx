@@ -17,7 +17,7 @@ const Form = ({
           label="Title"
           placeholder="Enter title"
           value={title}
-          onChange={e => setTitle(e.target.value)}
+          onChange={event => setTitle(event.target.value)}
         />
         <div className="flex flex-col">
           <label className="text-sm font-medium text-gray-800">
@@ -29,7 +29,7 @@ const Form = ({
             placeholder="Enter description"
             rows="5"
             value={description}
-            onChange={e => setDescription(e.target.value)}
+            onChange={event => setDescription(event.target.value)}
           />
         </div>
       </div>
