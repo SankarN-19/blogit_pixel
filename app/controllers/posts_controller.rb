@@ -2,7 +2,9 @@
 
 class PostsController < ApplicationController
   def index
-    posts = Post.includes(:user, :organization, :categories).all
+    posts = Post.includes(:user, :organization, :categories)
+      .where(params[:category_id].present? ? { categories: { id: params[:category_id] } } : {})
+      .all
 
     render status: :ok, json: {
       posts: posts.as_json(
