@@ -28,7 +28,7 @@
 #       enabled: "ON"
 
 en:
-  successfully_created: "Post was successfully created!"
+  successfully_created: "%{entity} was successfully created!"
   hello: "Hello world"
   post:
     slug:
