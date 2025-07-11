@@ -6,9 +6,12 @@ import Card from "components/Posts/Card";
 import { isNil, isEmpty, either } from "ramda";
 import { Link } from "react-router-dom";
 
+import useCategoryStore from "../../stores/useCategoryStore";
+
 const Dashboard = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { selectedCategories } = useCategoryStore();
 
   const fetchPosts = async () => {
     try {
@@ -26,6 +29,14 @@ const Dashboard = () => {
   useEffect(() => {
     fetchPosts();
   }, []);
+
+  const filteredPosts = !isEmpty(selectedCategories)
+    ? posts.filter(post =>
+        post.categories?.some(category =>
+          selectedCategories.includes(category.id)
+        )
+      )
+    : posts;
 
   if (loading) {
     return (
@@ -51,7 +62,7 @@ const Dashboard = () => {
         </div>
       ) : (
         <div className="mt-6 flex flex-col gap-4">
-          {posts.map(post => (
+          {filteredPosts.map(post => (
             <Link key={post.id} to={`/posts/${post.slug}`}>
               <Card post={post} />
             </Link>

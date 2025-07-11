@@ -10,6 +10,8 @@
   "editor.formatOnSave": true,
   "yaml.format.enable": true,
   "cSpell.words": [
-    "bloggable"
+    "bigbinary",
+    "bloggable",
+    "neeto"
   ],
 }
