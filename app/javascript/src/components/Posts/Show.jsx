@@ -20,7 +20,7 @@ const Show = () => {
       setPost(post);
     } catch (error) {
       logger.error(error);
-      history.push("/dashboard");
+      history.push("/");
     } finally {
       setLoading(false);
     }

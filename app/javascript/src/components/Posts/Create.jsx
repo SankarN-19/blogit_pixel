@@ -39,7 +39,7 @@ const Create = () => {
         description,
         category_ids: selectedCategoryIds,
       });
-      history.push("/dashboard");
+      history.push("/");
     } catch (error) {
       logger.error(error);
     } finally {

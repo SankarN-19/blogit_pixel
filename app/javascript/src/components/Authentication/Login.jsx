@@ -22,7 +22,7 @@ const Login = () => {
         userName: response.data.name,
       });
       setAuthHeaders();
-      window.location.href = "/dashboard";
+      window.location.href = "/";
     } catch (error) {
       logger.error(error);
       setLoading(false);
