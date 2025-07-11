@@ -1,5 +1,7 @@
 import React from "react";
 
+import { Typography } from "@bigbinary/neetoui";
+
 import CategoryList from "../commons/CategoryList";
 
 const Card = ({ post }) => {
@@ -14,11 +16,13 @@ const Card = ({ post }) => {
 
   return (
     <div className="rounded-lg border-b-2 bg-slate-50 p-4 shadow-sm">
-      <h2 className="mb-2 text-2xl font-bold">{title}</h2>
+      <Typography className="mb-2 text-xl font-bold">{title}</Typography>
       <CategoryList categories={categories} />
       <div className="text-sm text-gray-700">
-        <p className="mb-1 font-bold">{user.name}</p>
-        <p className="text-xs text-gray-500">{formatted}</p>
+        <Typography className="mb-1 text-xs font-semibold">
+          {user.name}
+        </Typography>
+        <Typography className="text-xs text-gray-500">{formatted}</Typography>
       </div>
     </div>
   );

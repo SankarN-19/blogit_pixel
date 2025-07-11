@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 
+import { Typography } from "@bigbinary/neetoui";
 import postsApi from "apis/posts";
 import { PageLoader, Container } from "components/commons";
 import { useParams, useHistory } from "react-router-dom";
@@ -41,16 +42,18 @@ const Show = () => {
 
   return (
     <Container>
-      <div className="flex flex-col gap-y-6 pt-6">
+      <div className="flex flex-col gap-y-2 pt-2">
         <CategoryList categories={post.categories} />
-        <h1 className="text-3xl font-semibold">{post.title}</h1>
+        <Typography className="text-2xl font-semibold">{post.title}</Typography>
         <div>
-          <p className="text-sm font-semibold text-gray-800">
+          <Typography className="text-sm font-semibold text-gray-800">
             {post.user.name}
-          </p>
-          <p className="text-xs text-gray-500">{formattedDate}</p>
+          </Typography>
+          <Typography className="text-xs text-gray-500">
+            {formattedDate}
+          </Typography>
         </div>
-        <p className="text-lg">{post.description}</p>
+        <Typography className="text-sm">{post.description}</Typography>
       </div>
     </Container>
   );

@@ -1,14 +1,15 @@
 import React from "react";
 
+import { Typography } from "@bigbinary/neetoui";
 import { Button, Input } from "components/commons";
 import { Link } from "react-router-dom";
 
 const Login = ({ handleSubmit, setEmail, setPassword, loading }) => (
   <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
     <div className="w-full max-w-md">
-      <h2 className="mt-6 text-center text-3xl font-extrabold leading-9 text-gray-700">
+      <Typography className="mt-6 text-center text-3xl font-extrabold leading-9 text-gray-700">
         Sign In
-      </h2>
+      </Typography>
       <div className="text-center">
         <Link
           className="mt-2 text-sm font-medium text-black transition duration-150 ease-in-out focus:underline focus:outline-none"

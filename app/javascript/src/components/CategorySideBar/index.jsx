@@ -51,7 +51,7 @@ const CategorySidebar = () => {
   return (
     <div className="fixed left-16 top-0 flex h-screen w-64 flex-col border-r bg-slate-200 p-4 shadow-sm">
       <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-lg font-semibold">CATEGORIES</h2>
+        <Typography className="text-lg font-semibold">CATEGORIES</Typography>
         <div className="flex space-x-2">
           <Search
             className="text-gray-600 hover:text-gray-800"

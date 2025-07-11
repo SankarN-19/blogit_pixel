@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { Select } from "@bigbinary/neetoui";
+import { Select, Typography } from "@bigbinary/neetoui";
 import { Button, Input } from "components/commons";
 import { Link } from "react-router-dom";
 
@@ -43,12 +43,12 @@ const Signup = ({
       px-4 py-12 sm:px-6 lg:px-8 "
     >
       <div className="w-full max-w-md">
-        <h2
+        <Typography
           className="mt-6 text-center text-3xl font-extrabold
           leading-9 text-gray-700"
         >
           Sign Up
-        </h2>
+        </Typography>
         <div className="text-center">
           <Link
             to="/"

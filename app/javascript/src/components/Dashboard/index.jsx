@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 
+import { Typography } from "@bigbinary/neetoui";
 import postsApi from "apis/posts";
 import { PageLoader, Container, Button } from "components/commons";
 import Card from "components/Posts/Card";
@@ -49,16 +50,16 @@ const Dashboard = () => {
   return (
     <Container>
       <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-semibold">Blog posts</h2>
+        <Typography className="text-3xl font-semibold">Blog posts</Typography>
         <Link to="/posts/create">
           <Button buttonText="Add new blog post" />
         </Link>
       </div>
       {either(isNil, isEmpty)(posts) ? (
         <div className="flex h-[80vh] items-center justify-center">
-          <h1 className="text-center text-xl text-gray-600">
+          <Typography className="text-center text-xl text-gray-600">
             You have not created or been assigned any posts 📝
-          </h1>
+          </Typography>
         </div>
       ) : (
         <div className="mt-6 flex flex-col gap-4">
