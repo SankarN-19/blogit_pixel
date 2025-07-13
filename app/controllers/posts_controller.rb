@@ -26,21 +26,34 @@ class PostsController < ApplicationController
   end
 
   def show
-    post = Post.includes(:user, :categories).find_by!(slug: params[:slug])
-    render json: {
+    post = Post.includes(:user, :organization, :categories).find_by!(slug: params[:slug])
+    render status: :ok, json: {
       post: post.as_json(
-        only: [:id, :title, :description, :created_at],
         include: {
           user: { only: [:id, :name] },
+          organization: { only: [:id, :name] },
           categories: { only: [:id, :name] }
-        }
+        },
+        except: [:user_id, :organization_id]
       )
     }
+  end
+
+  def update
+    post = Post.find_by!(slug: params[:slug])
+    post.update!(post_params)
+    render_notice(t("successfully_updated", entity: "Post"))
+  end
+
+  def destroy
+    post = Post.find_by!(slug: params[:slug])
+    post.destroy!
+    render_json
   end
 
   private
 
     def post_params
-      params.require(:post).permit(:title, :description, category_ids: [])
+      params.require(:post).permit(:title, :description, :status, category_ids: [])
     end
 end

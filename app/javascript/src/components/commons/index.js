@@ -6,7 +6,6 @@ import PageLoader from "./PageLoader";
 import PageTitle from "./PageTitle";
 import PrivateRoute from "./PrivateRoute";
 import Toastr from "./Toastr";
-import Tooltip from "./Tooltip";
 
 export {
   Button,
@@ -14,7 +13,6 @@ export {
   Input,
   PageLoader,
   PageTitle,
-  Tooltip,
   Toastr,
   CategoryList,
   PrivateRoute,

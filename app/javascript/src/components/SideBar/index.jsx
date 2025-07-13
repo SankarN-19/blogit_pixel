@@ -1,6 +1,12 @@
 import React, { useRef } from "react";
 
-import { Edit, LeftArrow, List, ListDetails } from "@bigbinary/neeto-icons";
+import {
+  Edit,
+  LeftArrow,
+  Folder,
+  List,
+  ListDetails,
+} from "@bigbinary/neeto-icons";
 import { Popover, Typography } from "@bigbinary/neetoui";
 import { Link, useLocation } from "react-router-dom";
 import { getFromLocalStorage, setToLocalStorage } from "utils/storage";
@@ -32,30 +38,49 @@ const Sidebar = ({ toggleCategorySidebar }) => {
 
   return (
     <div className="fixed left-0 top-0 flex h-screen w-16 flex-col items-center justify-between border-r bg-white py-6 shadow-sm">
-      <div className="space-y-6">
+      <div className="flex flex-col items-center gap-6">
         <Link to="/">
           <div className="h-6 w-6 cursor-pointer">
             <img src="https://img.icons8.com/?size=100&id=tz1GQBtNqT2P&format=png&color=000000" />
           </div>
         </Link>
         <Link to="/">
-          <div className="h-6 w-6 cursor-pointer py-6">
+          <div
+            className={`h-6 w-6 cursor-pointer ${
+              location.pathname === "/" ? "text-blue-600" : "text-black"
+            }`}
+          >
             <List />
           </div>
         </Link>
         <Link to="/posts/create">
-          <div className="h-6 w-6 cursor-pointer pt-6">
+          <div
+            className={`h-6 w-6 cursor-pointer rounded p-1 ${
+              location.pathname === "/posts/create"
+                ? "text-blue-600"
+                : "text-black"
+            }`}
+          >
             <Edit />
           </div>
         </Link>
         {location.pathname === "/" && (
           <div
-            className="h-6 w-6 cursor-pointer py-6"
+            className="h-6 w-6 cursor-pointer"
             onClick={toggleCategorySidebar}
           >
             <ListDetails />
           </div>
         )}
+        <Link to="/my-blogs">
+          <div
+            className={`h-6 w-6 cursor-pointer ${
+              location.pathname === "/my-blogs" ? "text-blue-600" : "text-black"
+            }`}
+          >
+            <Folder />
+          </div>
+        </Link>
       </div>
       <div className="relative">
         <img

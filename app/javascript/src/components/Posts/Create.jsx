@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 
 import categoriesApi from "apis/categories";
 import postsApi from "apis/posts";
-import { Container, PageTitle } from "components/commons";
+import { Container } from "components/commons";
 import { useHistory } from "react-router-dom";
 
 import Form from "./Form";
+import Header from "./Header";
 
 const Create = () => {
   const history = useHistory();
@@ -14,6 +15,7 @@ const Create = () => {
   const [categories, setCategories] = useState([]);
   const [selectedCategoryIds, setSelectedCategoryIds] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState("Pending");
 
   const fetchCategories = async () => {
     try {
@@ -38,6 +40,7 @@ const Create = () => {
         title,
         description,
         category_ids: selectedCategoryIds,
+        status,
       });
       history.push("/");
     } catch (error) {
@@ -50,7 +53,7 @@ const Create = () => {
   return (
     <Container>
       <div className="flex h-full flex-col gap-y-12">
-        <PageTitle title="New blog post" />
+        <Header setStatus={setStatus} status={status} type="create" />
         <Form
           categories={categories}
           description={description}

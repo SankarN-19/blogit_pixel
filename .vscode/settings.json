@@ -10,8 +10,10 @@
   "editor.formatOnSave": true,
   "yaml.format.enable": true,
   "cSpell.words": [
+    "actiondropdown",
     "bigbinary",
     "bloggable",
+    "neetix",
     "neeto",
     "neetoui",
     "Toastr"

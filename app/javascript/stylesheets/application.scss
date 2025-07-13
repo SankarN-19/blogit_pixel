@@ -8,3 +8,16 @@
 .list {
   scrollbar-width: none;
 }
+.neetix-button--primary {
+  background-color: black;
+}
+.neetix-button--primary:hover{
+  background-color: #333 !important;
+}
+tbody tr:nth-child(even) {
+  background-color: #f0f0f0;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #ffffff;
+}

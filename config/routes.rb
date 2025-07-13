@@ -11,10 +11,10 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   constraints(lambda { |req| req.format == :json }) do
-    resources :posts, only: [:index, :show, :create], param: :slug
+    resources :posts, param: :slug, except: [:new, :edit]
     resources :categories, only: [:index, :create]
-    resources :users, only: %i[index create]
-    resources :organizations, only: %i[index]
+    resources :users, only: [:index, :create]
+    resources :organizations, only: [:index]
     resource :session, only: [:create, :destroy]
   end
 

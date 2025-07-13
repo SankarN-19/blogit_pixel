@@ -5,9 +5,9 @@ import { Typography } from "@bigbinary/neetoui";
 import CategoryList from "../commons/CategoryList";
 
 const Card = ({ post }) => {
-  const { title, user, categories, created_at } = post;
+  const { title, user, categories, updated_at } = post;
 
-  const date = new Date(created_at);
+  const date = new Date(updated_at);
   const formatted = date.toLocaleDateString("en-GB", {
     day: "numeric",
     month: "long",

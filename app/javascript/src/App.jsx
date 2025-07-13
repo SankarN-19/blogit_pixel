@@ -8,7 +8,8 @@ import { getFromLocalStorage } from "utils/storage";
 
 import { Login, Signup } from "./components/Authentication";
 import PrivateRoute from "./components/commons/PrivateRoute";
-import { CreatePost, ShowPost } from "./components/Posts";
+import MyBlogPosts from "./components/MyBlogPosts";
+import { CreatePost, EditPost, ShowPost } from "./components/Posts";
 
 const App = () => {
   const authToken = getFromLocalStorage("authToken");
@@ -18,6 +19,8 @@ const App = () => {
     <Router>
       <ToastContainer />
       <Switch>
+        <Route exact component={MyBlogPosts} path="/my-blogs" />
+        <Route exact component={EditPost} path="/posts/:slug/edit" />
         <Route exact component={CreatePost} path="/posts/create" />
         <Route exact component={ShowPost} path="/posts/:slug" />
         <Route exact component={Signup} path="/signup" />

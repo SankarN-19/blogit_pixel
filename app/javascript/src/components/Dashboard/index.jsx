@@ -58,16 +58,18 @@ const Dashboard = () => {
       {either(isNil, isEmpty)(posts) ? (
         <div className="flex h-[80vh] items-center justify-center">
           <Typography className="text-center text-xl text-gray-600">
-            You have not created or been assigned any posts 📝
+            You have not created any posts 📝
           </Typography>
         </div>
       ) : (
         <div className="mt-6 flex flex-col gap-4">
-          {filteredPosts.map(post => (
-            <Link key={post.id} to={`/posts/${post.slug}`}>
-              <Card post={post} />
-            </Link>
-          ))}
+          {filteredPosts
+            ?.filter(post => post.status === "Published")
+            .map(post => (
+              <Link key={post.id} to={`/posts/${post.slug}`}>
+                <Card post={post} />
+              </Link>
+            ))}
         </div>
       )}
     </Container>
