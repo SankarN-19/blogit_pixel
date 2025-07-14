@@ -91,13 +91,22 @@ const Sidebar = ({ toggleCategorySidebar }) => {
         />
         <Popover className="w-52 py-1" position="right" reference={profileRef}>
           <div className="p-2">
-            <div className="border-b">
-              <Typography className="font-semibold">{userName}</Typography>
-              <Typography className="text-sm text-gray-600">
-                {userEmail}
-              </Typography>
+            <div className="border-b pb-2">
+              <div className="flex items-center gap-3">
+                <img
+                  alt="Not found"
+                  className="h-10 w-10 rounded-full"
+                  src="https://cdn-icons-png.flaticon.com/128/3135/3135715.png"
+                />
+                <div className="flex flex-col">
+                  <Typography className="font-semibold">{userName}</Typography>
+                  <Typography className="text-sm text-gray-600">
+                    {userEmail}
+                  </Typography>
+                </div>
+              </div>
             </div>
-            <div className="flex items-center gap-2 py-1">
+            <div className="flex items-center gap-2 py-2">
               <LeftArrow className="h-6 w-6 cursor-pointer" />
               <div
                 className="cursor-pointer text-[15px] font-semibold"

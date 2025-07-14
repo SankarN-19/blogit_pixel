@@ -30,8 +30,8 @@ const Row = ({ blog, fetchPosts }) => {
 
   const history = useHistory();
 
-  const showBlog = () => {
-    history.push(`/posts/${slug}`);
+  const moveToEditPage = () => {
+    history.push(`/posts/${slug}/edit`);
   };
 
   useEffect(() => {
@@ -78,7 +78,7 @@ const Row = ({ blog, fetchPosts }) => {
     <tr>
       <td
         className="cursor-pointer px-2 py-2 text-green-500 hover:text-green-800"
-        onClick={showBlog}
+        onClick={moveToEditPage}
       >
         {title.slice(0, 30)} {title.length > 50 ? "..." : ""}
       </td>

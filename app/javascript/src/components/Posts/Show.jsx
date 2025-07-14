@@ -7,9 +7,11 @@ import { PageLoader, Container } from "components/commons";
 import Logger from "js-logger";
 import { useParams, useHistory } from "react-router-dom";
 
+import { getFromLocalStorage } from "../../utils/storage";
 import CategoryList from "../commons/CategoryList";
 
 const Show = () => {
+  const authUserId = getFromLocalStorage("authUserId");
   const { slug } = useParams();
   const history = useHistory();
   const [post, setPost] = useState(null);
@@ -64,21 +66,32 @@ const Show = () => {
                 )}
               </div>
             </div>
-            <Tooltip content="Edit" position="top">
-              <div>
-                <Edit onClick={updatePost} />
-              </div>
-            </Tooltip>
+            {post.user.id === authUserId && (
+              <Tooltip content="Edit" position="top">
+                <div>
+                  <Edit onClick={updatePost} />
+                </div>
+              </Tooltip>
+            )}
           </div>
-          <div>
-            <Typography className="text-sm font-semibold text-gray-800">
-              {post.user.name}
-            </Typography>
-            <Typography className="text-xs text-gray-500">
-              {formattedDate}
-            </Typography>
+          <div className="flex items-center gap-3">
+            <img
+              alt="Not found"
+              className="h-9 w-9 rounded-full"
+              src="https://cdn-icons-png.flaticon.com/128/3135/3135715.png"
+            />
+            <div className="flex flex-col">
+              <Typography className="text-sm font-semibold text-gray-800">
+                {post.user.name}
+              </Typography>
+              <Typography className="text-xs text-gray-500">
+                {formattedDate}
+              </Typography>
+            </div>
           </div>
-          <Typography className="text-sm">{post.description}</Typography>
+          <pre className="whitespace-break-spaces font-sans">
+            {post.description}
+          </pre>
         </div>
       </div>
     </Container>

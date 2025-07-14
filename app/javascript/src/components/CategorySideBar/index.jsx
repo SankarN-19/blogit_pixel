@@ -3,12 +3,14 @@ import React, { useState, useEffect } from "react";
 import { Plus, Search } from "@bigbinary/neeto-icons";
 import { Modal, Typography } from "@bigbinary/neetoui";
 import categoriesApi from "apis/categories";
+import { useTranslation } from "react-i18next";
 
 import useDebounce from "../../hooks/useDebounce";
 import useCategoryStore from "../../stores/useCategoryStore";
 import { Button, Input } from "../commons";
 
 const CategorySidebar = () => {
+  const { t } = useTranslation();
   const [categories, setCategories] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [showSearch, setShowSearch] = useState(false);
@@ -51,7 +53,9 @@ const CategorySidebar = () => {
   return (
     <div className="fixed left-16 top-0 flex h-screen w-64 flex-col border-r bg-slate-200 p-4 shadow-sm">
       <div className="mb-4 flex items-center justify-between">
-        <Typography className="text-lg font-semibold">CATEGORIES</Typography>
+        <Typography className="text-lg font-semibold">
+          {t("categories.title")}
+        </Typography>
         <div className="flex space-x-2">
           <Search
             className="text-gray-600 hover:text-gray-800"
@@ -93,7 +97,7 @@ const CategorySidebar = () => {
         size="small"
         onClose={() => setShowCreateCategoryModal(false)}
       >
-        <Typography style="h1">New category</Typography>
+        <Typography style="h1">{t("categories.new")}</Typography>
         <Input
           label="Category title"
           placeholder="Enter title"

@@ -19,6 +19,7 @@ const Edit = () => {
   const [pageLoading, setPageLoading] = useState(true);
   const [updatedTime, setUpdatedTime] = useState("");
   const [status, setStatus] = useState("Draft");
+  const [savedStatus, setSavedStatus] = useState("Draft");
 
   const fetchPostDetails = async () => {
     try {
@@ -31,6 +32,7 @@ const Edit = () => {
         post.categories?.map(category => category.id) || []
       );
       setStatus(post.status === "Pending" ? "Draft" : post.status);
+      setSavedStatus(post.status === "Pending" ? "Draft" : post.status);
       setUpdatedTime(post.updated_at);
     } catch (error) {
       logger.error(error);
@@ -89,6 +91,8 @@ const Edit = () => {
     <Container>
       <div className="flex h-full flex-col gap-y-12">
         <Header
+          handleSubmit={handleSubmit}
+          savedStatus={savedStatus}
           setStatus={setStatus}
           status={status}
           type="edit"
@@ -97,7 +101,6 @@ const Edit = () => {
         <Form
           categories={categories}
           description={description}
-          handleSubmit={handleSubmit}
           loading={loading}
           selectedCategoryIds={selectedCategoryIds}
           setDescription={setDescription}

@@ -15,7 +15,7 @@ const Create = () => {
   const [categories, setCategories] = useState([]);
   const [selectedCategoryIds, setSelectedCategoryIds] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState("Pending");
+  const [status, setStatus] = useState("Draft");
 
   const fetchCategories = async () => {
     try {
@@ -53,11 +53,15 @@ const Create = () => {
   return (
     <Container>
       <div className="flex h-full flex-col gap-y-12">
-        <Header setStatus={setStatus} status={status} type="create" />
+        <Header
+          handleSubmit={handleSubmit}
+          setStatus={setStatus}
+          status={status}
+          type="create"
+        />
         <Form
           categories={categories}
           description={description}
-          handleSubmit={handleSubmit}
           loading={loading}
           selectedCategoryIds={selectedCategoryIds}
           setDescription={setDescription}

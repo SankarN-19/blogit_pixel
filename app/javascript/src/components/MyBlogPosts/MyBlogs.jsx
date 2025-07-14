@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { isNil, isEmpty, either } from "ramda";
+import { useTranslation } from "react-i18next";
 
 import Table from "./Table";
 
@@ -9,6 +10,7 @@ import { getFromLocalStorage } from "../../utils/storage";
 import { PageLoader } from "../commons";
 
 const MyBlogs = () => {
+  const { t } = useTranslation();
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const userId = getFromLocalStorage("authUserId");
@@ -41,7 +43,7 @@ const MyBlogs = () => {
   if (either(isNil, isEmpty)(blogs)) {
     return (
       <h1 className="my-5 text-center text-xl leading-5">
-        You have not created any posts 📝
+        {t("posts.no_posts")}
       </h1>
     );
   }

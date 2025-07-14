@@ -5,11 +5,13 @@ import postsApi from "apis/posts";
 import { PageLoader, Container, Button } from "components/commons";
 import Card from "components/Posts/Card";
 import { isNil, isEmpty, either } from "ramda";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import useCategoryStore from "../../stores/useCategoryStore";
 
 const Dashboard = () => {
+  const { t } = useTranslation();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const { selectedCategories } = useCategoryStore();
@@ -50,7 +52,9 @@ const Dashboard = () => {
   return (
     <Container>
       <div className="flex items-center justify-between">
-        <Typography className="text-3xl font-semibold">Blog posts</Typography>
+        <Typography className="text-3xl font-semibold">
+          {t("posts.blog_posts")}
+        </Typography>
         <Link to="/posts/create">
           <Button buttonText="Add new blog post" />
         </Link>
@@ -58,7 +62,7 @@ const Dashboard = () => {
       {either(isNil, isEmpty)(posts) ? (
         <div className="flex h-[80vh] items-center justify-center">
           <Typography className="text-center text-xl text-gray-600">
-            You have not created any posts 📝
+            {t("posts.no_posts")}
           </Typography>
         </div>
       ) : (

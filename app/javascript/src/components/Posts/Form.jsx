@@ -1,6 +1,7 @@
 import React from "react";
 
-import { Button, Input } from "components/commons";
+import { Input } from "components/commons";
+import { useTranslation } from "react-i18next";
 import Select from "react-select";
 
 const Form = ({
@@ -11,9 +12,8 @@ const Form = ({
   selectedCategoryIds,
   setSelectedCategoryIds,
   categories,
-  handleSubmit,
-  loading,
 }) => {
+  const { t } = useTranslation();
   const categoryOptions = categories.map(category => ({
     value: category.id,
     label: category.name,
@@ -29,7 +29,7 @@ const Form = ({
   };
 
   return (
-    <form className="h-full w-full" onSubmit={handleSubmit}>
+    <form className="h-full w-full">
       <div className="flex h-full flex-col justify-between rounded-md border p-6 shadow">
         <div className="flex flex-col gap-4">
           <Input
@@ -40,7 +40,7 @@ const Form = ({
           />
           <div className="flex flex-col">
             <label className="mb-1 text-sm font-medium text-gray-800">
-              Category*
+              {t("categories.category_label")}
             </label>
             <Select
               isMulti
@@ -54,7 +54,7 @@ const Form = ({
           </div>
           <div className="flex flex-col">
             <label className="text-sm font-medium text-gray-800">
-              Description*
+              {t("posts.description_label")}
             </label>
             <textarea
               required
@@ -65,14 +65,6 @@ const Form = ({
               onChange={event => setDescription(event.target.value)}
             />
           </div>
-        </div>
-        <div className="mt-4 flex items-center gap-4 self-end">
-          <Button buttonText="Submit" loading={loading} type="submit" />
-          <Button
-            buttonText="Cancel"
-            style="secondary"
-            onClick={() => history.back()}
-          />
         </div>
       </div>
     </form>

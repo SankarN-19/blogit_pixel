@@ -1,0 +1,27 @@
+{
+  "auth": {
+    "sign_in": "Sign In",
+    "sign_up": "Sign Up",
+    "or_register_now": "Or Register Now",
+    "or_login_now": "Or Login Now"
+  },
+  "categories": {
+    "new": "New category",
+    "category_label": "Category*",
+    "title": "CATEGORIES"
+  },
+  "posts": {
+    "no_posts": "You have not created any posts 📝",
+    "blog_posts": "Blog posts",
+    "delete": "Delete",
+    "title": "TITLE",
+    "category": "CATEGORY",
+    "last_published_at": "LAST PUBLISHED AT",
+    "status": "STATUS",
+    "description_label": "Description*",
+    "organization_label": "Organization",
+    "save_draft": "Save as draft",
+    "publish": "Publish",
+    "draft": "Draft"
+  }
+}
