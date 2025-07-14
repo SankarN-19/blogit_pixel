@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 
+import { Typography } from "@bigbinary/neetoui";
 import { isNil, isEmpty, either } from "ramda";
 import { useTranslation } from "react-i18next";
 
@@ -42,9 +43,11 @@ const MyBlogs = () => {
 
   if (either(isNil, isEmpty)(blogs)) {
     return (
-      <h1 className="my-5 text-center text-xl leading-5">
-        {t("posts.no_posts")}
-      </h1>
+      <div className="flex h-[80vh] items-center justify-center">
+        <Typography className="text-center text-xl text-gray-600">
+          {t("posts.no_posts")}
+        </Typography>
+      </div>
     );
   }
 

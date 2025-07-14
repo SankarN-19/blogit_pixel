@@ -31,8 +31,8 @@ const Edit = () => {
       setSelectedCategoryIds(
         post.categories?.map(category => category.id) || []
       );
-      setStatus(post.status === "Pending" ? "Draft" : post.status);
-      setSavedStatus(post.status === "Pending" ? "Draft" : post.status);
+      setStatus(post.status);
+      setSavedStatus(post.status);
       setUpdatedTime(post.updated_at);
     } catch (error) {
       logger.error(error);

@@ -89,7 +89,7 @@ const Sidebar = ({ toggleCategorySidebar }) => {
           ref={profileRef}
           src="https://img.icons8.com/?size=100&id=7819&format=png&color=000000"
         />
-        <Popover className="w-52 py-1" position="right" reference={profileRef}>
+        <Popover className="w-56 py-1" position="right" reference={profileRef}>
           <div className="p-2">
             <div className="border-b pb-2">
               <div className="flex items-center gap-3">
