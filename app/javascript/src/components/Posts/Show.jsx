@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { Edit } from "@bigbinary/neeto-icons";
 import { Tooltip, Typography } from "@bigbinary/neetoui";
-import postsApi from "apis/posts";
 import { PageLoader, Container } from "components/commons";
-import Logger from "js-logger";
 import { useParams, useHistory } from "react-router-dom";
 
+import { useShowPost } from "../../hooks/reactQuery/postsApi";
 import { getFromLocalStorage } from "../../utils/storage";
 import CategoryList from "../commons/CategoryList";
 
@@ -14,32 +13,21 @@ const Show = () => {
   const authUserId = getFromLocalStorage("authUserId");
   const { slug } = useParams();
   const history = useHistory();
-  const [post, setPost] = useState(null);
-  const [loading, setLoading] = useState(true);
 
-  const fetchPost = async () => {
-    try {
-      const {
-        data: { post },
-      } = await postsApi.show(slug);
-      setPost(post);
-    } catch (error) {
-      Logger.error(error);
-      history.push("/");
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { data, isFetching } = useShowPost(slug);
+  const post = data?.post || {};
 
   const updatePost = () => {
     history.push(`/posts/${post.slug}/edit`);
   };
 
-  useEffect(() => {
-    fetchPost();
-  }, []);
-
-  if (loading) return <PageLoader />;
+  if (isFetching) {
+    return (
+      <div className="h-screen w-screen">
+        <PageLoader />
+      </div>
+    );
+  }
 
   const date = new Date(post.updated_at);
   const formattedDate = date.toLocaleDateString("en-GB", {

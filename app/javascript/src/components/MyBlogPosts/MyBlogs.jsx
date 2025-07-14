@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { Typography } from "@bigbinary/neetoui";
 import { isNil, isEmpty, either } from "ramda";
@@ -6,34 +6,18 @@ import { useTranslation } from "react-i18next";
 
 import Table from "./Table";
 
-import postsApi from "../../apis/posts";
+import { useFetchPosts } from "../../hooks/reactQuery/postsApi";
 import { getFromLocalStorage } from "../../utils/storage";
 import { PageLoader } from "../commons";
 
 const MyBlogs = () => {
   const { t } = useTranslation();
-  const [blogs, setBlogs] = useState([]);
-  const [loading, setLoading] = useState(true);
   const userId = getFromLocalStorage("authUserId");
 
-  const fetchPosts = async () => {
-    try {
-      const {
-        data: { posts },
-      } = await postsApi.fetch();
-      setBlogs(posts.filter(post => post.user.id === userId));
-      setLoading(false);
-    } catch (error) {
-      logger.error(error);
-      setLoading(false);
-    }
-  };
+  const { data, isFetching } = useFetchPosts();
+  const blogs = data?.posts?.filter(post => post.user.id === userId) || [];
 
-  useEffect(() => {
-    fetchPosts();
-  }, []);
-
-  if (loading) {
+  if (isFetching) {
     return (
       <div className="h-screen w-screen">
         <PageLoader />
@@ -51,7 +35,7 @@ const MyBlogs = () => {
     );
   }
 
-  return <Table blogs={blogs} fetchPosts={fetchPosts} />;
+  return <Table blogs={blogs} />;
 };
 
 export default MyBlogs;

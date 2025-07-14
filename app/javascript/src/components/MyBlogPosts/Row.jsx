@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 
 import { MenuHorizontal } from "@bigbinary/neeto-icons";
+import { useTranslation } from "react-i18next";
 import { useHistory, Link } from "react-router-dom";
 
-import postsApi from "../../apis/posts";
+import { useDeletePost, useUpdatePost } from "../../hooks/reactQuery/postsApi";
 
-const Row = ({ blog, fetchPosts }) => {
+const Row = ({ blog }) => {
+  const { t } = useTranslation();
   const {
     title,
     categories: [cat1 = "", cat2 = ""],
@@ -17,6 +19,8 @@ const Row = ({ blog, fetchPosts }) => {
   } = blog;
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const menuRef = useRef();
+  const { mutate: deletePost } = useDeletePost();
+  const { mutate: updatePost } = useUpdatePost();
 
   const formatDate = date =>
     new Date(date).toLocaleString("en-US", {
@@ -48,30 +52,20 @@ const Row = ({ blog, fetchPosts }) => {
     };
   }, [menuRef]);
 
-  const updatePost = async () => {
-    try {
-      await postsApi.update({
-        slug,
-        payload: {
-          title,
-          description,
-          category_ids: categories,
-          status: status === "Published" ? "Draft" : "Published",
-        },
-      });
-      fetchPosts();
-    } catch (error) {
-      logger.error(error);
-    }
+  const updateHandler = () => {
+    updatePost({
+      slug,
+      payload: {
+        title,
+        description,
+        category_ids: categories,
+        status: status === "Published" ? "Draft" : "Published",
+      },
+    });
   };
 
-  const destroyPost = async () => {
-    try {
-      await postsApi.destroy(slug);
-      fetchPosts();
-    } catch (error) {
-      logger.error(error);
-    }
+  const deleteHandler = () => {
+    deletePost(slug);
   };
 
   return (
@@ -99,15 +93,15 @@ const Row = ({ blog, fetchPosts }) => {
           <div className="absolute right-0 z-20 mt-2 w-48 rounded-md border border-gray-300 bg-white py-1 shadow-xl">
             <Link
               className="block cursor-pointer border-b px-3 py-1.5 text-sm hover:bg-gray-100"
-              onClick={updatePost}
+              onClick={updateHandler}
             >
               {status === "Published" ? "Unpublish" : "Publish"}
             </Link>
             <Link
               className="block cursor-pointer px-3 py-1.5 text-sm text-red-500 hover:bg-gray-100"
-              onClick={destroyPost}
+              onClick={deleteHandler}
             >
-              Delete
+              {t("posts.delete")}
             </Link>
           </div>
         )}

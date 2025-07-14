@@ -5,7 +5,7 @@ import { Button, ActionDropdown, Tooltip } from "@bigbinary/neetoui";
 import { useTranslation } from "react-i18next";
 import { Link, useParams, useHistory } from "react-router-dom";
 
-import postsApi from "../../apis/posts";
+import { useDeletePost } from "../../hooks/reactQuery/postsApi";
 import { PageTitle } from "../commons";
 
 const Header = ({
@@ -26,6 +26,13 @@ const Header = ({
     MenuItem: { Button: MenuButton },
   } = ActionDropdown;
 
+  const { mutate: deletePost } = useDeletePost();
+
+  const deleteHandler = () => {
+    deletePost(slug);
+    history.push("/");
+  };
+
   useEffect(() => {
     const handleClickOutside = event => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -39,15 +46,6 @@ const Header = ({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [menuRef]);
-
-  const destroyPost = async () => {
-    try {
-      await postsApi.destroy(slug);
-      history.push("/");
-    } catch (error) {
-      logger.error(error);
-    }
-  };
 
   return (
     <div className="flex items-end justify-between">
@@ -120,7 +118,7 @@ const Header = ({
               <div className="absolute right-0 z-20 mt-2 w-48 rounded-md border border-gray-300 bg-white py-1 shadow-xl">
                 <Link
                   className="block cursor-pointer px-3 py-1.5 text-sm text-red-500 hover:bg-gray-100"
-                  onClick={destroyPost}
+                  onClick={deleteHandler}
                 >
                   {t("posts.delete")}
                 </Link>

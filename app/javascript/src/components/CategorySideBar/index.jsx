@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import { Plus, Search } from "@bigbinary/neeto-icons";
 import { Modal, Typography } from "@bigbinary/neetoui";
-import categoriesApi from "apis/categories";
 import { useTranslation } from "react-i18next";
 
+import {
+  useCreateCategory,
+  useFetchCategories,
+} from "../../hooks/reactQuery/categoriesApi";
 import useDebounce from "../../hooks/useDebounce";
 import useCategoryStore from "../../stores/useCategoryStore";
 import { Button, Input } from "../commons";
 
 const CategorySidebar = () => {
   const { t } = useTranslation();
-  const [categories, setCategories] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const [showCreateCategoryModal, setShowCreateCategoryModal] = useState(false);
@@ -20,30 +22,14 @@ const CategorySidebar = () => {
 
   const debouncedSearchTerm = useDebounce(searchTerm);
 
-  const fetchCategories = async () => {
-    try {
-      const {
-        data: { categories },
-      } = await categoriesApi.fetch();
-      setCategories(categories);
-    } catch (error) {
-      logger.error(error);
-    }
-  };
+  const { mutate: createCategory } = useCreateCategory();
+  const { data } = useFetchCategories();
+  const categories = data?.categories || [];
 
-  useEffect(() => {
-    fetchCategories();
-  }, []);
-
-  const createCategory = async () => {
-    try {
-      await categoriesApi.create({ category: { name: categoryTitle } });
-      fetchCategories();
-      setShowCreateCategoryModal(false);
-      setCategoryTitle("");
-    } catch (error) {
-      logger.error(error);
-    }
+  const createCategoryHandler = () => {
+    createCategory({ category: { name: categoryTitle } });
+    setShowCreateCategoryModal(false);
+    setCategoryTitle("");
   };
 
   const filteredCategories = categories.filter(category =>
@@ -105,7 +91,7 @@ const CategorySidebar = () => {
           onChange={event => setCategoryTitle(event.target.value)}
         />
         <div className="flex gap-4 ">
-          <Button buttonText="Add" onClick={createCategory} />
+          <Button buttonText="Add" onClick={createCategoryHandler} />
           <Button
             buttonText="Cancel"
             style="secondary"

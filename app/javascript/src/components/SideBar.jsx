@@ -8,32 +8,38 @@ import {
   ListDetails,
 } from "@bigbinary/neeto-icons";
 import { Popover, Typography } from "@bigbinary/neetoui";
+import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
 import { getFromLocalStorage, setToLocalStorage } from "utils/storage";
 
-import authApi from "../../apis/auth";
-import { resetAuthTokens } from "../../apis/axios";
+import { resetAuthTokens } from "../apis/axios";
+import { useLogout } from "../hooks/reactQuery/authApi";
 
 const Sidebar = ({ toggleCategorySidebar }) => {
+  const { t } = useTranslation();
   const location = useLocation();
   const profileRef = useRef(null);
   const userName = getFromLocalStorage("authUserName");
   const userEmail = getFromLocalStorage("authEmail");
 
-  const handleLogout = async () => {
-    try {
-      await authApi.logout();
-      setToLocalStorage({
-        authToken: null,
-        email: null,
-        userId: null,
-        userName: null,
-      });
-      resetAuthTokens();
-      window.location.href = "/login";
-    } catch (error) {
-      logger.error(error);
-    }
+  const { mutate: logout } = useLogout();
+
+  const handleLogout = () => {
+    logout(null, {
+      onSuccess: () => {
+        setToLocalStorage({
+          authToken: null,
+          email: null,
+          userId: null,
+          userName: null,
+        });
+        resetAuthTokens();
+        window.location.href = "/";
+      },
+      onError: error => {
+        logger.error(error);
+      },
+    });
   };
 
   return (
@@ -112,7 +118,7 @@ const Sidebar = ({ toggleCategorySidebar }) => {
                 className="cursor-pointer text-[15px] font-semibold"
                 onClick={handleLogout}
               >
-                Logout
+                {t("auth.logout")}
               </div>
             </div>
           </div>

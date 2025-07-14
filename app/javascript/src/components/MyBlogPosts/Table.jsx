@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import Row from "./Row";
 
-const Table = ({ blogs, fetchPosts }) => {
+const Table = ({ blogs }) => {
   const { t } = useTranslation();
 
   return (
@@ -22,7 +22,7 @@ const Table = ({ blogs, fetchPosts }) => {
       </thead>
       <tbody>
         {blogs.map(blog => (
-          <Row blog={blog} fetchPosts={fetchPosts} key={blog.id} />
+          <Row blog={blog} key={blog.id} />
         ))}
       </tbody>
     </table>

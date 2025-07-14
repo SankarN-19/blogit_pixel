@@ -3,7 +3,8 @@
     "sign_in": "Sign In",
     "sign_up": "Sign Up",
     "or_register_now": "Or Register Now",
-    "or_login_now": "Or Login Now"
+    "or_login_now": "Or Login Now",
+    "logout": "Logout"
   },
   "categories": {
     "new": "New category",

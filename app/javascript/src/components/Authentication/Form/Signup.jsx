@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 import { Select, Typography } from "@bigbinary/neetoui";
 import { Button, Input } from "components/commons";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import organizationsApi from "../../../apis/organizations";
+import { useFetchOrganizations } from "../../../hooks/reactQuery/organizatonsApi";
 
 const Signup = ({
   handleSubmit,
@@ -17,22 +17,8 @@ const Signup = ({
   setOrganization,
 }) => {
   const { t } = useTranslation();
-  const [organizations, setOrganizations] = useState([]);
-
-  const fetchOrganizations = async () => {
-    try {
-      const {
-        data: { organizations },
-      } = await organizationsApi.fetch();
-      setOrganizations(organizations);
-    } catch (error) {
-      logger.error(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchOrganizations();
-  }, []);
+  const { data } = useFetchOrganizations();
+  const organizations = data?.organizations || [];
 
   const organizationOptions = organizations.map(org => ({
     value: org.id,

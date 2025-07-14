@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 
-import categoriesApi from "apis/categories";
-import postsApi from "apis/posts";
 import { Container, PageLoader } from "components/commons";
 import { useParams, useHistory } from "react-router-dom";
 
 import Form from "./Form";
 import Header from "./Header";
+
+import { useFetchCategories } from "../../hooks/reactQuery/categoriesApi";
+import { useShowPost, useUpdatePost } from "../../hooks/reactQuery/postsApi";
 
 const Edit = () => {
   const { slug } = useParams();
@@ -14,18 +15,15 @@ const Edit = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [selectedCategoryIds, setSelectedCategoryIds] = useState([]);
-  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [pageLoading, setPageLoading] = useState(true);
   const [updatedTime, setUpdatedTime] = useState("");
   const [status, setStatus] = useState("Draft");
   const [savedStatus, setSavedStatus] = useState("Draft");
 
-  const fetchPostDetails = async () => {
-    try {
-      const {
-        data: { post },
-      } = await postsApi.show(slug);
+  const { data, isFetching } = useShowPost(slug);
+  useEffect(() => {
+    if (data) {
+      const post = data.post;
       setTitle(post.title);
       setDescription(post.description);
       setSelectedCategoryIds(
@@ -34,35 +32,17 @@ const Edit = () => {
       setStatus(post.status);
       setSavedStatus(post.status);
       setUpdatedTime(post.updated_at);
-    } catch (error) {
-      logger.error(error);
-    } finally {
-      setPageLoading(false);
     }
-  };
+  }, [data]);
 
-  const fetchCategories = async () => {
-    try {
-      const {
-        data: { categories },
-      } = await categoriesApi.fetch();
-      setCategories(categories);
-    } catch (error) {
-      logger.error(error);
-    } finally {
-      setPageLoading(false);
-    }
-  };
+  const { mutate: updatePost } = useUpdatePost();
 
-  useEffect(() => {
-    Promise.all([fetchPostDetails(), fetchCategories()]);
-  }, []);
-
-  const handleSubmit = async event => {
+  const handleSubmit = event => {
     event.preventDefault();
     setLoading(true);
-    try {
-      await postsApi.update({
+
+    updatePost(
+      {
         slug,
         payload: {
           title,
@@ -70,16 +50,24 @@ const Edit = () => {
           category_ids: selectedCategoryIds,
           status,
         },
-      });
-      history.push("/");
-    } catch (error) {
-      logger.error(error);
-    } finally {
-      setLoading(false);
-    }
+      },
+      {
+        onSuccess: () => {
+          setLoading(false);
+          history.push("/");
+        },
+        onError: error => {
+          setLoading(false);
+          logger.error(error);
+        },
+      }
+    );
   };
 
-  if (pageLoading) {
+  const { data: categoryData } = useFetchCategories();
+  const categories = categoryData?.categories || [];
+
+  if (isFetching) {
     return (
       <div className="h-screen w-screen">
         <PageLoader />

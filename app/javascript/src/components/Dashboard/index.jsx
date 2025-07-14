@@ -1,37 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { Typography } from "@bigbinary/neetoui";
-import postsApi from "apis/posts";
 import { PageLoader, Container, Button } from "components/commons";
 import Card from "components/Posts/Card";
 import { isNil, isEmpty, either } from "ramda";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
+import { useFetchPosts } from "../../hooks/reactQuery/postsApi";
 import useCategoryStore from "../../stores/useCategoryStore";
 
 const Dashboard = () => {
   const { t } = useTranslation();
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
   const { selectedCategories } = useCategoryStore();
 
-  const fetchPosts = async () => {
-    try {
-      const {
-        data: { posts },
-      } = await postsApi.fetch();
-      setPosts(posts);
-    } catch (error) {
-      logger.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchPosts();
-  }, []);
+  const { data, isFetching } = useFetchPosts();
+  const posts = data?.posts || [];
 
   const filteredPosts = !isEmpty(selectedCategories)
     ? posts.filter(post =>
@@ -41,7 +25,7 @@ const Dashboard = () => {
       )
     : posts;
 
-  if (loading) {
+  if (isFetching) {
     return (
       <div className="flex h-screen w-screen items-center justify-center">
         <PageLoader />
